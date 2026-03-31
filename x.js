@@ -11,7 +11,8 @@ function avrupa_cf7_to_hubspot_global($contact_form) {
         return;
     }
 
-    $hubspot_token = 'HS APu yazin'; 
+    
+    $hubspot_token = 'Tok'; 
 
     $name  = avrupa_find_cf7_value($data, ['your-name', 'name', 'fullname', 'full-name', 'ad-soyad', 'adsoyad', 'text-947']);
     $phone = avrupa_find_cf7_value($data, ['your-phone', 'phone', 'telefon', 'tel', 'mobile', 'gsm', 'text-728']);
@@ -52,8 +53,7 @@ function avrupa_cf7_to_hubspot_global($contact_form) {
     if (!empty($gclid)) {
         $properties['gclid'] = sanitize_text_field($gclid);
     }
-
-    if (empty($properties['email'])) {
+    if (empty($properties)) {
         return;
     }
 
@@ -79,6 +79,7 @@ function avrupa_cf7_to_hubspot_global($contact_form) {
     $status_code = wp_remote_retrieve_response_code($response);
     $response_body = wp_remote_retrieve_body($response);
 
+    // (PATCH)
     if ($status_code == 409) {
         $response_data = json_decode($response_body, true);
         
